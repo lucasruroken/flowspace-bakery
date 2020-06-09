@@ -21,6 +21,6 @@ class Cookie < ActiveRecord::Base
   private
 
   def prepare
-    ::Cookies::CookWorker.perform_in(1.minutes, id)
+    ::Cookies::CookWorker.perform_in(1.minute, id)
   end
 end
