@@ -1,3 +1,5 @@
+= link_to "Prepare Cookie", new_oven_cookies_path(@oven), class: 'button show-for-small-only'
+
 %h3= @oven.name
 
 .cookie-info
@@ -12,4 +14,4 @@
 
 %br
 
-= link_to "Prepare Cookie", new_oven_cookies_path(@oven), class: 'button'
+= link_to "Prepare Cookie", new_oven_cookies_path(@oven), class: 'button hide-for-small-only'
