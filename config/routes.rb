@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     root to: 'store#index', as: :store_root
   end
 
+  mount ActionCable.server => '/cable'
+
   root to: 'visitors#index'
 
   resources :ovens do
