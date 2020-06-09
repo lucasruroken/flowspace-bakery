@@ -108,6 +108,51 @@ describe CookiesController do
         end
       end
     end
+  end
 
+  describe 'PUT empty' do
+    let(:oven) { FactoryGirl.create(:oven, user: user) }
+    let(:cookie) { FactoryGirl.create(:cookie, storage: oven, state: :cooked) }
+    let(:the_request) { put :empty, params: { oven_id: oven.id, id: cookie.id } }
+
+    context "when not authenticated" do
+      before { sign_in nil }
+
+      it "blocks access" do
+        the_request
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+
+    context "when authenticated" do
+      before { sign_in user }
+
+      it "allows access" do
+        expect {
+          the_request
+        }.to_not raise_error
+      end
+
+      it "assigns the @oven" do
+        the_request
+        expect(assigns(:oven)).to eq(oven)
+      end
+
+      it "moves the oven's cookie to the user" do
+        the_request
+        expect(oven.reload.cookies.any?).to be_falsey
+        expect(user.stored_cookies.to_a).to match_array([cookie])
+      end
+
+      context "when requesting someone else's oven" do
+        let(:oven) { FactoryGirl.create(:oven) }
+
+        it "blocks access" do
+          expect {
+            the_request
+          }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+      end
+    end
   end
 end
