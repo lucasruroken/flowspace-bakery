@@ -10,6 +10,15 @@
 
   .row
     .small-8.columns
+      %label
+        Total Cookies
+  .row
+    .small-8.columns
+      %input{type: :number, value: 1, name: :total_cookies}
+
+
+  .row
+    .small-8.columns
       = f.submit 'Mix and bake', class: 'button'
 
 

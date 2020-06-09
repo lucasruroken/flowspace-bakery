@@ -12,9 +12,10 @@ Rails.application.routes.draw do
   root to: 'visitors#index'
 
   resources :ovens do
-    resource :cookies
-    member do
-      post :empty
+    resources :cookies do
+      member do
+        post :empty
+      end
     end
   end
 end
